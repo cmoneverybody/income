@@ -1,0 +1,53 @@
+* {
+   margin: 0;
+   padding: 0;
+   border: 0;
+   outline: 0;
+   font-size: 100%;
+   vertical-align: baseline;
+   background: transparent;
+}
+.incoming-container {
+   display: flex;
+}
+.incoming-leftSide {
+   display: inline-flex;
+   outline: 1px solid darkred;
+   padding: 16px;
+}
+.incoming-rightSide {
+   display: inline-flex;
+   outline: 1px solid darkblue;
+   padding: 16px;
+}
+.incoming-calendar {
+   width: 428px;
+   table-layout: fixed;
+   border-spacing: 0px 20px;
+   empty-cells: hide;
+}
+.incoming-calendar-day {
+   height: 60px;
+   width: 60px;
+   overflow: hidden;
+   box-sizing: border-box;
+
+   border-left: 1px solid black;
+   border-top: 1px solid black;
+   border-bottom: 1px solid black;
+}
+.incoming-calendar-day__lastOfWeek, .incoming-calendar-day__lastOfMonth {
+   border-right: 1px solid black;
+}
+.incoming-calendar-date, .incoming-calendar-incoming, .incoming-calendar-cost {
+   width: 60px;
+   height: 20px;
+   display: block;
+   box-sizing: border-box;
+   border: none;
+   text-align: center;
+}
+.incoming-calendar-incoming {
+   border-top: 1px solid black;
+   border-bottom: 1px solid black;
+}

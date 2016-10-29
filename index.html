@@ -1,0 +1,52 @@
+<html ng-app="incoming">
+	<head>
+		<meta charset="utf-8">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/locale/ru.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/3.5.1/firebase.js"></script>
+		<script src="https://cdn.firebase.com/libs/angularfire/2.0.1/angularfire.min.js"></script>
+
+		<script src="js/main.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/main.css"/>
+	</head>
+	<body>
+		<div ng-controller="incomingCtrl" class="incoming-container">
+			<div class="incoming-leftSide">
+				<select ng-model="selectedMonth">
+					<option ng-repeat="month in months" ng-selected="month === selectedMonth">{{ month }}</option>
+				</select>
+				<select ng-model="selectedYear">
+					<option ng-repeat="year in years" ng-selected="year === selectedYear">{{ year }}</option>
+				</select>
+				<span>{{selectedMonth}}</span>
+				<span>{{selectedYear}}</span>
+			</div>
+			<div class="incoming-rightSide">
+				<table class="incoming-calendar">
+					<tr ng-repeat="week in weeks" class="incoming-calendar-week">
+						<td ng-repeat="day in week" class="incoming-calendar-day"
+							 ng-class="{ 'incoming-calendar-day__lastOfWeek' : day.lastOfWeek, 'incoming-calendar-day__lastOfMonth' : !!day.lastOfMonth }">
+							<div ng-if="!!day.date">
+								<span class="incoming-calendar-date">{{day.date}}</span>
+								<input class="incoming-calendar-incoming"/>
+								<input class="incoming-calendar-cost"/>
+								<input class="incoming-calendar-incoming"/>
+								<input class="incoming-calendar-cost"/>
+							</div>
+						</td>
+					</tr>
+				</table>
+				<!--<div class="incoming-calendar">
+					<div class="incoming-calendar-day" ng-repeat="date in dates">
+							<div ng-if="!!date.date">
+							<span class="incoming-calendar-date">{{date.date}}</span>
+							<input class="incoming-calendar-incoming"/>
+							<input class="incoming-calendar-cost"/>
+						</div>
+					</div>
+				</div>-->
+			</div>
+		</div>
+	</body>
+</html>
