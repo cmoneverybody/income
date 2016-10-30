@@ -23,6 +23,11 @@ input::-webkit-inner-spin-button {
    line-height: 32px;
    cursor: pointer;
 }
+.incoming-datepicker-prev, .incoming-datepicker-next {
+   font-size: 24px;
+   width: 32px;
+   padding-left: 4px;
+}
 .incoming-datepicker-prev:hover, .incoming-datepicker-next:hover {
    color: #FF8C00;
 }
