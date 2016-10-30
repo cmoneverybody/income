@@ -19,12 +19,48 @@
 	<body>
 		<div ng-controller="incomingCtrl" class="incoming-container">
 			<div class="incoming-leftSide">
-				<span class="glyphicon glyphicon-menu-left incoming-datepicker-prev" ng-click="updateMonth(false)"></span>
-				<span class="form-control incoming-datepicker" uib-datepicker-popup ng-model="datepicker.model" type="month" ng-change="datepicker.onChange()"
-				current-text="Текущий месяц" is-open="datepicker.opened" datepicker-options="datepicker.options" ng-click="datepicker.topggleOpened()">
-					{{datepicker.model | date}}
-				</span>
-				<span class="glyphicon glyphicon-menu-right incoming-datepicker-next" ng-click="updateMonth(true)"></span>
+				<div class="incoming-datepicker-container">
+					<span class="incoming-datepicker-prev" ng-click="updateMonth(false)"><</span>
+					<span class="form-control incoming-datepicker" uib-datepicker-popup ng-model="datepicker.model"
+							type="month" ng-change="datepicker.onChange()" current-text="Текущий месяц" is-open="datepicker.opened"
+							datepicker-options="datepicker.options" ng-click="datepicker.topggleOpened()">
+						{{datepicker.model | date}}
+					</span>
+					<span class="incoming-datepicker-next" ng-click="updateMonth(true)">></span>
+				</div>
+				<div class="incoming-summaryTable">
+					<table>
+						<tbody>
+							<tr>
+								<td></td>
+								<td class="summaryTable__highlighting">
+									<span>На начало периода</span>
+									<span class="incoming-summaryTable-edit" ng-click="beginDataDisabled=!beginDataDisabled" title="Переключить режим редактирования">Ξ</span>
+								</td>
+								<td class="summaryTable__highlighting">На конец периода</td>
+								<td class="summaryTable__highlighting">Изменения</td>
+							</tr>
+							<tr>
+								<td class="summaryTable__highlighting">Алёна</td>
+								<td ng-class="{'incoming__darkBorder': !beginDataDisabled}"><input class="summaryTable__beginData" type="number" value="100" ng-readonly="beginDataDisabled"/></td>
+								<td>200</td>
+								<td>100</td>
+							</tr>
+							<tr>
+								<td class="summaryTable__highlighting">Алексей</td>
+								<td ng-class="{'incoming__darkBorder': !beginDataDisabled}"><input class="summaryTable__beginData" type="number" value="150" ng-readonly="beginDataDisabled"/></td>
+								<td>350</td>
+								<td>200</td>
+							</tr>
+							<tr>
+								<td class="summaryTable__highlighting">Общий</td>
+								<td>250</td>
+								<td>550</td>
+								<td>300</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 			<div class="incoming-rightSide">
 				<table class="incoming-calendar">

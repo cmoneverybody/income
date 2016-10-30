@@ -10,6 +10,12 @@ input::-webkit-inner-spin-button {
 .uib-clear, .uib-close {
    display: none;
 }
+.incoming-container {
+   display: table-row;
+}
+.incoming-datepicker-container {
+   display: flex;
+}
 .incoming-datepicker {
    width: 76px;
    background-color: #333333;
@@ -18,36 +24,67 @@ input::-webkit-inner-spin-button {
    padding: 0 8px;
    text-align: center;
 }
+.summaryTable__beginData {
+   width: 100%;
+   border: none;
+}
+.summaryTable__beginData.summaryTable__beginDataDisabled {
+   border-color: white;
+}
 .incoming-datepicker-prev, .incoming-datepicker-next, .incoming-datepicker {
    height: 32px;
    line-height: 32px;
    cursor: pointer;
+   display: inline-flex;
 }
 .incoming-datepicker-prev, .incoming-datepicker-next {
-   font-size: 24px;
+   font-size: 32px;
    width: 32px;
-   padding-left: 4px;
+   font-weight: bold;
+   text-align: center;
+   font-family: monospace;
+   padding: 0 7px;
 }
-.incoming-datepicker-prev:hover, .incoming-datepicker-next:hover {
+.incoming-datepicker-prev:hover, .incoming-datepicker-next:hover, .incoming-summaryTable-edit:hover {
    color: #FF8C00;
 }
-.incoming-container {
-   display: flex;
+.incoming-summaryTable table {
+   table-layout: fixed;
+   width: 100%;
+   border-collapse: separate;
+   border-spacing: 4px;
+}
+.incoming__darkBorder {
+   border-color: #333333 !important;
+}
+.incoming-summaryTable table td {
+   border: 1px solid white;
+}
+.incoming-summaryTable-edit {
+   cursor: pointer;
+}
+.incoming-summaryTable {
+   margin-top: 12px;
+   width: 420px;
+}
+.summaryTable__highlighting {
+   font-weight: bold;
+}
+.incoming-calendar th {
+   padding: 12px 0;
+   text-align: center;
 }
 .incoming-leftSide {
-   display: inline-flex;
-   outline: 1px solid darkred;
-   padding: 16px;
+   display: table-cell;
+   padding: 12px;
 }
 .incoming-rightSide {
-   display: inline-flex;
-   outline: 1px solid darkblue;
-   padding: 2px 16px;
+   display: table-cell;
+   padding: 12px;
 }
 .incoming-calendar {
    width: 566px;
    table-layout: fixed;
-   border-spacing: 0px 20px;
    empty-cells: hide;
    border-collapse: separate;
 }
@@ -60,12 +97,12 @@ input::-webkit-inner-spin-button {
    overflow: hidden;
    box-sizing: border-box;
 
-   border-left: 1px solid black;
-   border-top: 1px solid black;
-   border-bottom: 1px solid black;
+   border-left: 1px solid #333333;
+   border-top: 1px solid #333333;
+   border-bottom: 1px solid #333333;
 }
 .incoming-calendar-day__lastOfWeek, .incoming-calendar-day__lastOfMonth {
-   border-right: 1px solid black;
+   border-right: 1px solid #333333;
 }
 .incoming-calendar-date, .incoming-calendar-incoming, .incoming-calendar-cost {
    width: 80px;
@@ -80,8 +117,8 @@ input::-webkit-inner-spin-button {
    color: white;
 }
 .incoming-calendar-incoming {
-   border-top: 1px solid black;
-   border-bottom: 1px solid black;
+   border-top: 1px solid #333333;
+   border-bottom: 1px solid #333333;
 }
 .incoming-calendar-incoming-alexey {
    background-color: #A5FF7B;

@@ -26,8 +26,6 @@ var rec = {
    }
 };
 
-var oneConvertedDay = moment('2016-10-11').toDate().getTime();
-
 function prepareMonthWeeks(year, month) {
    var
       weeks = [],
@@ -57,6 +55,8 @@ function prepareMonthWeeks(year, month) {
 app.controller('incomingCtrl', ['$scope', function($scope) {
    $scope.weeks = prepareMonthWeeks('2016', '10');
    $scope.weekDays = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС'];   
+
+   $scope.beginDataDisabled = true;
 
    $scope.datepicker = {
       opened: false,
