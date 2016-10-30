@@ -1,11 +1,30 @@
 * {
+   font-size: 14px;
+   font-family: "Tahoma";
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+   -webkit-appearance: none;
    margin: 0;
-   padding: 0;
-   border: 0;
-   outline: 0;
-   font-size: 100%;
-   vertical-align: baseline;
-   background: transparent;
+}
+.uib-clear, .uib-close {
+   display: none;
+}
+.incoming-datepicker {
+   width: 76px;
+   background-color: #333333;
+   border-radius: 4px;
+   color: white;
+   padding: 0 8px;
+   text-align: center;
+}
+.incoming-datepicker-prev, .incoming-datepicker-next, .incoming-datepicker {
+   height: 32px;
+   line-height: 32px;
+   cursor: pointer;
+}
+.incoming-datepicker-prev:hover, .incoming-datepicker-next:hover {
+   color: #FF8C00;
 }
 .incoming-container {
    display: flex;
@@ -18,17 +37,21 @@
 .incoming-rightSide {
    display: inline-flex;
    outline: 1px solid darkblue;
-   padding: 16px;
+   padding: 2px 16px;
 }
 .incoming-calendar {
-   width: 428px;
+   width: 566px;
    table-layout: fixed;
    border-spacing: 0px 20px;
    empty-cells: hide;
+   border-collapse: separate;
+}
+.incoming-calendar-day-name {
+    
 }
 .incoming-calendar-day {
    height: 60px;
-   width: 60px;
+   width: 80px;
    overflow: hidden;
    box-sizing: border-box;
 
@@ -40,14 +63,30 @@
    border-right: 1px solid black;
 }
 .incoming-calendar-date, .incoming-calendar-incoming, .incoming-calendar-cost {
-   width: 60px;
+   width: 80px;
    height: 20px;
    display: block;
    box-sizing: border-box;
    border: none;
    text-align: center;
 }
+.incoming-calendar-date {
+   background-color: #333333;
+   color: white;
+}
 .incoming-calendar-incoming {
    border-top: 1px solid black;
    border-bottom: 1px solid black;
+}
+.incoming-calendar-incoming-alexey {
+   background-color: #A5FF7B;
+}
+.incoming-calendar-incoming-alena {
+   background-color: #B4CFEC;
+}
+.incoming-calendar-cost-alexey {
+   background-color: #D7FFAD;
+}
+.incoming-calendar-cost-alena {
+   background-color: #D6F5F5;
 }

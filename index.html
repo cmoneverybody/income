@@ -4,8 +4,14 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/locale/ru.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.5.8/angular-locale_ru.min.js"></script>
+   		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
+   		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/3.5.1/firebase.js"></script>
 		<script src="https://cdn.firebase.com/libs/angularfire/2.0.1/angularfire.min.js"></script>
+		<script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.2.0.js"></script>
+
+		<link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
 
 		<script src="js/main.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/main.css"/>
@@ -13,39 +19,33 @@
 	<body>
 		<div ng-controller="incomingCtrl" class="incoming-container">
 			<div class="incoming-leftSide">
-				<select ng-model="selectedMonth">
-					<option ng-repeat="month in months" ng-selected="month === selectedMonth">{{ month }}</option>
-				</select>
-				<select ng-model="selectedYear">
-					<option ng-repeat="year in years" ng-selected="year === selectedYear">{{ year }}</option>
-				</select>
-				<span>{{selectedMonth}}</span>
-				<span>{{selectedYear}}</span>
+				<span class="glyphicon glyphicon-menu-left incoming-datepicker-prev" ng-click="updateMonth(false)"></span>
+				<span class="form-control incoming-datepicker" uib-datepicker-popup ng-model="datepicker.model" type="month" ng-change="datepicker.onChange()"
+				current-text="Текущий месяц" is-open="datepicker.opened" datepicker-options="datepicker.options" ng-click="datepicker.topggleOpened()">
+					{{datepicker.model | date}}
+				</span>
+				<span class="glyphicon glyphicon-menu-right incoming-datepicker-next" ng-click="updateMonth(true)"></span>
 			</div>
 			<div class="incoming-rightSide">
 				<table class="incoming-calendar">
-					<tr ng-repeat="week in weeks" class="incoming-calendar-week">
-						<td ng-repeat="day in week" class="incoming-calendar-day"
-							 ng-class="{ 'incoming-calendar-day__lastOfWeek' : day.lastOfWeek, 'incoming-calendar-day__lastOfMonth' : !!day.lastOfMonth }">
-							<div ng-if="!!day.date">
-								<span class="incoming-calendar-date">{{day.date}}</span>
-								<input class="incoming-calendar-incoming"/>
-								<input class="incoming-calendar-cost"/>
-								<input class="incoming-calendar-incoming"/>
-								<input class="incoming-calendar-cost"/>
-							</div>
-						</td>
-					</tr>
+					<thead>
+						<th class="incoming-calendar-day-name" ng-repeat="day in weekDays">{{day}}</th>
+					</thead>
+					<tbody>
+						<tr ng-repeat="week in weeks" class="incoming-calendar-week">
+							<td ng-repeat="day in week" class="incoming-calendar-day"
+								 ng-class="{ 'incoming-calendar-day__lastOfWeek' : day.lastOfWeek, 'incoming-calendar-day__lastOfMonth' : !!day.lastOfMonth }">
+								<div ng-if="!!day.date">
+									<span class="incoming-calendar-date">{{day.date}}</span>
+									<input type="number" class="incoming-calendar-incoming incoming-calendar-incoming-alena"/>
+									<input type="number" class="incoming-calendar-cost incoming-calendar-cost-alena"/>
+									<input type="number" class="incoming-calendar-incoming incoming-calendar-incoming-alexey"/>
+									<input type="number" class="incoming-calendar-cost incoming-calendar-cost-alexey"/>
+								</div>
+							</td>
+						</tr>
+					</tbody>
 				</table>
-				<!--<div class="incoming-calendar">
-					<div class="incoming-calendar-day" ng-repeat="date in dates">
-							<div ng-if="!!date.date">
-							<span class="incoming-calendar-date">{{date.date}}</span>
-							<input class="incoming-calendar-incoming"/>
-							<input class="incoming-calendar-cost"/>
-						</div>
-					</div>
-				</div>-->
 			</div>
 		</div>
 	</body>

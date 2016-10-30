@@ -1,4 +1,4 @@
-var app = angular.module("incoming", ["firebase"]);
+var app = angular.module("incoming", ["firebase", 'ngAnimate', 'ngSanitize', 'ui.bootstrap', 'ngLocale']);
 /*firebase.initializeApp({
    apiKey: "AIzaSyARARvfxcSN1CSzom2cBfRMxb-9WpCxbrA",
    authDomain: "soundcrumbs-2a8a4.firebaseapp.com",
@@ -46,24 +46,41 @@ function prepareMonthWeeks(year, month) {
             index: day,
             lastOfWeek: j === 7,
             lastOfMonth: day === daysInMonth + firstDay - 1,
-            date: day < firstDay || day >= daysInMonth + firstDay ? '' : ((day - firstDay + 1 < 10 ? '0' : '') + (day - firstDay + 1))
+            date: day < firstDay || day >= daysInMonth + firstDay ? '' : [((day - firstDay + 1 < 10 ? '0' : '') + (day - firstDay + 1)), month, year].join('.')
          });
          day++;
       }
-      /*dates.push({
-         index: i,
-         date: i < firstDay || i >= daysInMonth + firstDay ? '' : ((i - firstDay + 1 < 10 ? '0' : '') + (i - firstDay + 1))
-      });*/
    }
    return weeks;
 }
 
 app.controller('incomingCtrl', ['$scope', function($scope) {
    $scope.weeks = prepareMonthWeeks('2016', '10');
-   $scope.selectedMonth = moment().format('MMMM');
-   $scope.selectedYear = moment().format('YYYY');
-   $scope.months = [ 'январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь' ];
-   $scope.years = [ '2015', '2016', '2017' ];
+   $scope.weekDays = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС'];   
+
+   $scope.datepicker = {
+      opened: false,
+      model: moment().format('YYYY-MM'),
+      options: {
+       datepickerMode: "month",
+       showWeeks: false,
+       minMode: 'month'
+      },
+      topggleOpened: function() {
+         this.opened = !this.opened;
+      },
+      onChange: function() {
+         $scope.weeks = prepareMonthWeeks(moment(this.model).format('YYYY'), moment(this.model).format('MM'));
+      }
+   };
+
+   $scope.updateMonth = function(nextMonth) {
+      var
+         currentMoment = moment($scope.datepicker.model);
+      currentMoment[nextMonth ? 'add' : 'subtract'](1, 'month');
+      $scope.datepicker.model = currentMoment.format('YYYY-MM');
+      $scope.weeks = prepareMonthWeeks(currentMoment.format('YYYY'), currentMoment.format('MM'));
+   };
 }]);
 
 app.controller('periodCtrl', ['$scope', function($scope) {
