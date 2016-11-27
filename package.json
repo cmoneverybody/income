@@ -1,14 +1,14 @@
 {
-  "name": "income",
-  "private": true,
-  "version": "1.0.0",
-  "description": "Income calculate",
-  "license": "MIT",
-  "devDependencies": {
-    "express": "^4.14.0"
-  },
-  "scripts": {
-    "prestart": "npm install",
-    "start": "node server.js"
-  }
+   "name": "income",
+   "private": true,
+   "version": "1.0.0",
+   "description": "Income calculate",
+   "license": "MIT",
+   "dependencies": {
+      "express": "^4.14.0",
+   },
+   "scripts": {
+      "prestart": "npm install",
+      "start": "node server.js"
+   }
 }
