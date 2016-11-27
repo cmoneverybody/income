@@ -144,6 +144,27 @@ function focusNextTarget(target) {
    }
 }
 
+app.controller('authCtrl', ['$scope', function($scope) {
+   $scope.userAuthenticated = 'none';
+   $scope.user = '';
+   $scope.password = '';
+   $scope.authentication = function(user, password) {
+      firebase.auth().signInWithEmailAndPassword(user, password)
+         .then(function() {
+            $scope.userAuthenticated = 'success';
+            if (!$scope.$$phase) {
+               $scope.$apply();
+            }
+         })
+         .catch(function() {
+            $scope.userAuthenticated = 'failed';
+            if (!$scope.$$phase) {
+               $scope.$apply();
+            }
+         });
+   };
+}]);
+
 app.controller('incomingCtrl', ['$scope', function($scope) {
    var
       monthCalendarRef;

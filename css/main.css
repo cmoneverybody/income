@@ -7,6 +7,19 @@ input::-webkit-inner-spin-button {
    -webkit-appearance: none;
    margin: 0;
 }
+.incoming-authentication {
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+.incoming-authentication .incoming-authentication-button {
+   float: right;
+}
 .uib-clear, .uib-close {
    display: none;
 }

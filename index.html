@@ -16,8 +16,17 @@
 		<script src="js/main.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/main.css"/>
 	</head>
-	<body>
-		<div ng-controller="incomingCtrl" class="incoming-container">
+	<body ng-controller="authCtrl">
+		<div class="incoming-authentication" ng-if="userAuthenticated !== 'success'">
+			<form class="incoming-authentication-form form-group" ng-class="{'has-error': userAuthenticated === 'failed'}">
+				<label class="control-label" for="user">Пользователь</label>
+				<input class="form-control" ng-model="user" id="user" autocomplete="on"/>
+				<label class="control-label" for="password">Пароль</label>
+				<input class="form-control" type="password" ng-model="password" id="password" autocomplete="on"/><br/>
+				<button type="submit" class="incoming-authentication-button btn btn-default" ng-click="authentication(user, password)">Авторизация</button>
+			</form>
+		</div>
+		<div ng-controller="incomingCtrl" class="incoming-container" ng-if="userAuthenticated === 'success'">
 			<div class="incoming-leftSide">
 				<div class="incoming-datepicker-container">
 					<span class="incoming-datepicker-prev" ng-click="updateMonth(false)"><</span>
