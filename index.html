@@ -35,28 +35,34 @@
 								<td></td>
 								<td class="summaryTable__highlighting">
 									<span>На начало периода</span>
-									<span class="incoming-summaryTable-edit" ng-click="beginDataDisabled=!beginDataDisabled" title="Переключить режим редактирования">Ξ</span>
+									<span class="incoming-summaryTable-edit glyphicon glyphicon-edit" ng-click="beginDataDisabled=!beginDataDisabled" title="Переключить режим редактирования"></span>
 								</td>
 								<td class="summaryTable__highlighting">На конец периода</td>
 								<td class="summaryTable__highlighting">Изменения</td>
 							</tr>
 							<tr>
 								<td class="summaryTable__highlighting">Алёна</td>
-								<td ng-class="{'incoming__darkBorder': !beginDataDisabled}"><input class="summaryTable__beginData" type="number" value="100" ng-readonly="beginDataDisabled"/></td>
-								<td>200</td>
-								<td>100</td>
+								<td ng-class="{'incoming__darkBorder': !beginDataDisabled}">
+									<span ng-if="beginDataDisabled" ng-bind="beginData.alena|number:2"></span>
+									<input ng-if="!beginDataDisabled" class="summaryTable__beginData" type="number" ng-value="beginData.alena" ng-blur="beginDataInputBlur($event, '/data/begin/', 'alena', beginData.alena)"/>
+								</td>
+								<td ng-bind="endData.alena|number:2"></td>
+								<td ng-bind="endData.alena-beginData.alena|number:2"></td>
 							</tr>
 							<tr>
 								<td class="summaryTable__highlighting">Алексей</td>
-								<td ng-class="{'incoming__darkBorder': !beginDataDisabled}"><input class="summaryTable__beginData" type="number" value="150" ng-readonly="beginDataDisabled"/></td>
-								<td>350</td>
-								<td>200</td>
+								<td ng-class="{'incoming__darkBorder': !beginDataDisabled}">
+									<span ng-if="beginDataDisabled" ng-bind="beginData.alexey|number:2"></span>
+									<input ng-if="!beginDataDisabled" class="summaryTable__beginData" type="number" ng-value="beginData.alexey" ng-blur="beginDataInputBlur($event, '/data/begin/', 'alexey', beginData.alexey)"/>
+								</td>
+								<td ng-bind="endData.alexey|number:2"></td>
+								<td ng-bind="endData.alexey-beginData.alexey|number:2"></td>
 							</tr>
 							<tr>
 								<td class="summaryTable__highlighting">Общий</td>
-								<td>250</td>
-								<td>550</td>
-								<td>300</td>
+								<td ng-bind="beginData.alexey+beginData.alena|number:2"></td>
+								<td ng-bind="endData.alexey+endData.alena|number:2"></td>
+								<td ng-bind="(endData.alena-beginData.alena)+(endData.alexey-beginData.alexey)|number:2"></td>
 							</tr>
 						</tbody>
 					</table>
@@ -68,15 +74,35 @@
 						<th class="incoming-calendar-day-name" ng-repeat="day in weekDays">{{day}}</th>
 					</thead>
 					<tbody>
-						<tr ng-repeat="week in weeks" class="incoming-calendar-week">
-							<td ng-repeat="day in week" class="incoming-calendar-day"
+						<tr ng-repeat="week in weeks track by $index" class="incoming-calendar-week">
+							<td ng-repeat="day in week track by $index" class="incoming-calendar-day"
 								 ng-class="{ 'incoming-calendar-day__lastOfWeek' : day.lastOfWeek, 'incoming-calendar-day__lastOfMonth' : !!day.lastOfMonth }">
 								<div ng-if="!!day.date">
 									<span class="incoming-calendar-date">{{day.date}}</span>
-									<input type="number" class="incoming-calendar-incoming incoming-calendar-incoming-alena"/>
-									<input type="number" class="incoming-calendar-cost incoming-calendar-cost-alena"/>
-									<input type="number" class="incoming-calendar-incoming incoming-calendar-incoming-alexey"/>
-									<input type="number" class="incoming-calendar-cost incoming-calendar-cost-alexey"/>
+									<input type="number"
+											 ng-value="day.data.incoming.alena"
+											 ng-blur="onCalendarInputBlur($event, '/' + day.day + '/incoming/alena', day.data.incoming.alena)"
+											 ng-keypress="onCalendarInputKeyPress($event)"
+											 class="incoming-calendar-incoming incoming-calendar-incoming-alena"
+											 tabindex="{{day.index+'1'}}"/>
+									<input type="number"
+											 ng-value="day.data.cost.alena"
+											 ng-blur="onCalendarInputBlur($event, '/' + day.day + '/cost/alena', day.data.cost.alena)"
+											 ng-keypress="onCalendarInputKeyPress($event)"
+											 class="incoming-calendar-cost incoming-calendar-cost-alena"
+											 tabindex="{{day.index+'2'}}"/>
+									<input type="number"
+											 ng-value="day.data.incoming.alexey"
+											 ng-blur="onCalendarInputBlur($event, '/' + day.day + '/incoming/alexey', day.data.incoming.alexey)"
+											 ng-keypress="onCalendarInputKeyPress($event)"
+											 class="incoming-calendar-incoming incoming-calendar-incoming-alexey"
+											 tabindex="{{day.index*100+'1'}}"/>
+									<input type="number"
+											 ng-value="day.data.cost.alexey"
+											 ng-blur="onCalendarInputBlur($event, '/' + day.day + '/cost/alexey', day.data.cost.alexey)"
+											 ng-keypress="onCalendarInputKeyPress($event)"
+											 class="incoming-calendar-cost incoming-calendar-cost-alexey"
+											 tabindex="{{day.index*100+'2'}}"/>
 								</div>
 							</td>
 						</tr>
