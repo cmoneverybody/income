@@ -54,6 +54,9 @@ input::-webkit-inner-spin-button {
    border-collapse: separate;
    border-spacing: 4px;
 }
+.incoming-summaryTable.incoming-summaryTable-bottom {
+   margin-top: 84px;
+}
 .incoming__darkBorder {
    border-color: #333333 !important;
 }

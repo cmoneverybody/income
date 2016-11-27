@@ -5,8 +5,8 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/locale/ru.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.5.8/angular-locale_ru.min.js"></script>
-   		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
-   		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/3.5.1/firebase.js"></script>
 		<script src="https://cdn.firebase.com/libs/angularfire/2.0.1/angularfire.min.js"></script>
 		<script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.2.0.js"></script>
@@ -63,6 +63,36 @@
 								<td ng-bind="beginData.alexey+beginData.alena|number:2"></td>
 								<td ng-bind="endData.alexey+endData.alena|number:2"></td>
 								<td ng-bind="(endData.alena-beginData.alena)+(endData.alexey-beginData.alexey)|number:2"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="incoming-summaryTable incoming-summaryTable-bottom">
+					<table>
+						<tbody>
+							<tr>
+								<td><i>Итого:</i></td>
+								<td class="summaryTable__highlighting"><span>Доход</span></td>
+								<td class="summaryTable__highlighting">Расход</td>
+								<td class="summaryTable__highlighting">Прибыль</td>
+							</tr>
+							<tr>
+								<td class="summaryTable__highlighting">Алёна</td>
+								<td ng-bind="summaryData.incoming.alena|number:2"></td>
+								<td ng-bind="summaryData.cost.alena|number:2"></td>
+								<td ng-bind="(summaryData.incoming.alena - summaryData.cost.alena)|number:2"></td>
+							</tr>
+							<tr>
+								<td class="summaryTable__highlighting">Алексей</td>
+								<td ng-bind="summaryData.incoming.alexey|number:2"></td>
+								<td ng-bind="summaryData.cost.alexey|number:2"></td>
+								<td ng-bind="(summaryData.incoming.alexey - summaryData.cost.alexey)|number:2"></td>
+							</tr>
+							<tr>
+								<td class="summaryTable__highlighting">Общий</td>
+								<td ng-bind="(summaryData.incoming.alena + summaryData.incoming.alexey)|number:2"></td>
+								<td ng-bind="(summaryData.cost.alena + summaryData.cost.alexey)|number:2"></td>
+								<td ng-bind="((summaryData.incoming.alena - summaryData.cost.alena) + (summaryData.incoming.alexey - summaryData.cost.alexey))|number:2"></td>
 							</tr>
 						</tbody>
 					</table>

@@ -20,33 +20,18 @@ function prepareMonthWeeks(data, year, month) {
       daysForDrawMonth = daysInMonth + firstDay - 1 + 7 - lastDay,
       weeksCount = daysForDrawMonth / 7,
       day = 1,
-      realDay,
-      dayData;
+      realDay;
    for (var i = 1; i <= weeksCount; i++) {
       weeksDays = [];
       weeks.push(weeksDays);
       for (var j = 1; j <= 7; j++) {
          realDay = day < firstDay || day >= daysInMonth + firstDay ? undefined : (day - firstDay + 1 < 10 ? '0' : '') + (day - firstDay + 1);
-         if (realDay) {
-            dayData = {
-               incoming: {
-                  alena: data && data[realDay] && data[realDay].incoming ? data[realDay].incoming.alena : null,
-                  alexey: data && data[realDay] && data[realDay].incoming ? data[realDay].incoming.alexey : null
-               },
-               cost: {
-                  alena: data && data[realDay] && data[realDay].cost ? data[realDay].cost.alena : null,
-                  alexey: data && data[realDay] && data[realDay].cost ? data[realDay].cost.alexey : null
-               }
-            }
-         } else {
-            dayData = null;
-         }
          weeksDays.push({
             index: day,
             day: realDay,
             lastOfWeek: j === 7,
             lastOfMonth: day === daysInMonth + firstDay - 1,
-            data: dayData,
+            data: realDay && data ? data[realDay] : undefined,
             date: realDay ? [realDay, month, year].join('.') : undefined
          });
          day++;
@@ -55,34 +40,49 @@ function prepareMonthWeeks(data, year, month) {
    return weeks;
 }
 
-function prepareEndData(beginData, weeks) {
+function prepareSummaryData(weeks) {
    var
       result = {
-         alena: beginData.alena,
-         alexey: beginData.alexey
+         incoming: {
+            alena: 0,
+            alexey: 0
+         },
+         cost: {
+            alena: 0,
+            alexey: 0
+         }
       };
    weeks.forEach(function(weekDays) {
       weekDays.forEach(function(day) {
          if (day.data) {
             if (day.data.incoming) {
                if (day.data.incoming.alena) {
-                  result.alena += day.data.incoming.alena;
+                  result.incoming.alena += day.data.incoming.alena;
                }
                if (day.data.incoming.alexey) {
-                  result.alexey += day.data.incoming.alexey;
+                  result.incoming.alexey += day.data.incoming.alexey;
                }
             }
             if (day.data.cost) {
                if (day.data.cost.alena) {
-                  result.alena -= day.data.cost.alena;
+                  result.cost.alena += day.data.cost.alena;
                }
                if (day.data.cost.alexey) {
-                  result.alexey -= day.data.cost.alexey;
+                  result.cost.alexey += day.data.cost.alexey;
                }
             }
          }
       });
    });
+   return result;
+}
+
+function prepareEndData(beginData, summaryData) {
+   var
+      result = {
+         alena: beginData.alena + summaryData.incoming.alena - summaryData.cost.alena,
+         alexey: beginData.alexey + summaryData.incoming.alexey - summaryData.cost.alexey
+      };
    return result;
 }
 
@@ -183,9 +183,11 @@ app.controller('incomingCtrl', ['$scope', function($scope) {
    function monthCalendarValueChanged(data) {
       $scope.weeks = prepareMonthWeeks(data.val(), activeDate.format('YYYY'), activeDate.format('MM'));
       if (!$scope.endData) {
-         $scope.endData = prepareEndData($scope.beginData, $scope.weeks);
+         $scope.summaryData = prepareSummaryData($scope.weeks);
+         $scope.endData = prepareEndData($scope.beginData, $scope.summaryData);
       } else {
-         $scope.endData = prepareEndData($scope.beginData, $scope.weeks);
+         $scope.summaryData = prepareSummaryData($scope.weeks);
+         $scope.endData = prepareEndData($scope.beginData, $scope.summaryData);
          firebase.database().ref(activeDate.format('MMYYYY') + '/data/end').set($scope.endData);
       }
       if (!$scope.$$phase) {
@@ -198,6 +200,7 @@ app.controller('incomingCtrl', ['$scope', function($scope) {
       if (!$scope.$$phase) {
          $scope.$apply();
       }
+      $scope.summaryData = undefined;
       $scope.endData = undefined;
       return updateUserData().then(function() {
          if (monthCalendarRef) {
@@ -234,7 +237,8 @@ app.controller('incomingCtrl', ['$scope', function($scope) {
       if ((lastValue || !isNaN(value) && typeof value === 'number') && lastValue !== value) {
          $scope.beginData[user] = !isNaN(value) && typeof value === 'number' ? value : null;
          changes[path + user] = $scope.beginData[user];
-         $scope.endData = prepareEndData($scope.beginData, $scope.weeks);
+         $scope.summaryData = prepareSummaryData($scope.weeks);
+         $scope.endData = prepareEndData($scope.beginData, $scope.summaryData);
          if (!$scope.$$phase) {
             $scope.$apply();
          }
